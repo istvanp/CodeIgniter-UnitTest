@@ -1,0 +1,23 @@
+Change Log
+==========
+
+Version 1.0.2
+-------------
+Release date: January 16th, 2010
+
+- Added missing array_search_recusrive() function to controller
+- Modified test mapping function and view to be able to easily change the name of the controller
+- Modified the view to use site_url()
+- Modified the view to show test groups in selection box
+
+Version 1.0.1
+-------------
+Release date: October 28th, 2009
+
+- Now overloading the CI Unit Test class
+- Removed support for testing controllers due to CI limitation
+- SQL errors are now displayed in the test report if a test case fails
+
+Version 1.0
+-----------
+Release date: September 15th, 2009
