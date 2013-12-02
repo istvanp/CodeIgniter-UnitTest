@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+<?php $this->load->helper('url');?>
 <title>Unit Testing &rsaquo; <?=ucfirst($type)?></title>
-<link rel="stylesheet" type="text/css" href="<?=site_url("assets/css/unit_test.css")?>" charset="utf-8">
+<link rel="stylesheet" type="text/css" href="/css/unit-tests/unit_test.css">
 </head>
 <body>
 <div id="header">
@@ -18,36 +19,40 @@
 	<input type="button" value="Libraries" onclick="window.location='<?=site_url($this->uri->rsegment(1)."/libraries")?>'" />
 	<select id="jump">
 		<optgroup label="Test groups">
-			<option value="<?=site_url($this->uri->rsegment(1)."/all")?>"<? if ($type == 'all') echo ' selected="selected"'?>>All</option>
-		<? foreach($tests as $test_type => $testgroup): ?>
-			<option value="<?=site_url($this->uri->rsegment(1)."/$test_type")?>"<? if ($type == $test_type) echo ' selected="selected"'?>><?=ucfirst($test_type)?></option>
-		<? endforeach; ?>
+			<option value="<?=site_url($this->uri->rsegment(1)."/all")?>"<?php if ($type == 'all') echo ' selected="selected"'?>>All</option>
+		<?php foreach($tests as $test_type => $testgroup) { ?>
+			<option value="<?=site_url($this->uri->rsegment(1)."/$test_type")?>"<?php if ($type == $test_type) echo ' selected="selected"'?>><?=ucfirst($test_type)?></option>
+		<?php } ?>
+
 		</optgroup>
-		<? foreach($tests as $test_type => $testgroup): ?>
+		<?php foreach($tests as $test_type => $testgroup) { ?>
 		<optgroup label="<?=ucfirst($test_type)?>">
-			<? foreach($testgroup as $test): ?>
-			<option value="<?=site_url($this->uri->rsegment(1)."/$test")?>"<? if ($type == $test) echo ' selected="selected"'?>><?=$test?></option>
-			<? endforeach; ?>
+			<?php foreach($testgroup as $test) { ?>
+			<option value="<?=site_url($this->uri->rsegment(1)."/$test")?>"<?php if ($type == $test) echo ' selected="selected"'?>><?=$test?></option>
+			<?php } ?>
+
 		</optgroup>
-		<? endforeach; ?>
+		<?php } ?>
+
 	</select>
 	<input type="button" value="Run" onclick="window.location=document.getElementById('jump').value" />
 </div>
-<? if (isset($msg) && strlen($msg) > 0): ?>
+<?php if (isset($msg) && strlen($msg) > 0) { ?>
 <div id="message">
 	<?=$msg?>
 </div>
-<? endif; ?>
-<? if ($totals['all'] > 0): ?>
+<?php } ?>
+<?php if ($totals['all'] > 0) { ?>
 <div id="report">
 	<div class="summary <?=($totals['failed'] > 0) ? 'fail' : 'pass' ?>">
 		<?=$totals['passed']?> / <?=$totals['all']?> tests passed in <?=$total_time?> seconds
 	</div>
-	<? foreach($report as $key => $test):
-	if (array_key_exists($key, $headings['types']))
-		echo "<h1>{$headings['types'][$key]}</h1>\n";
-	if (array_key_exists($key, $headings['tests']))
-		echo "<h2>{$headings['tests'][$key]}</h2>\n";
+	
+	<?php foreach($report as $key => $test) {
+		if (array_key_exists($key, $headings['types']))
+			echo "<h1>{$headings['types'][$key]}</h1>\n";
+		if (array_key_exists($key, $headings['tests']))
+			echo "<h2>{$headings['tests'][$key]}</h2>\n";
 	?>
 	<div class="test <?=($test['Result'] == 'Passed') ? 'pass' : 'fail' ?>">
 		<div class="result"><?=strtoupper($test['Result'])?></div>
@@ -57,22 +62,22 @@
 			Expected
 				<strong><?=var_export($test['Expected Value'])?></strong> (<?=strtolower($test['Expected Datatype'])?>),
 			returned
-				<? if (is_string($test['Test Value'])): ?>
+				<?php if (is_string($test['Test Value'])): ?>
 				<?=highlight_code($test['Test Value'])?>
-				<? else: ?>
+				<?php else: ?>
 				<strong><?=var_export($test['Test Value'])?></strong> (<?=strtolower($test['Test Datatype'])?>)<br />
-				<? endif; ?>
-				<? if ( ! empty($test['SQL Error'])): ?>
+				<?php endif; ?>
+				<?php if ( ! empty($test['SQL Error'])): ?>
 				<code><?=$test['SQL Error']?></code>
-				<? endif; ?>
-				<? if ( ! empty($test['SQL Query'])): ?>
+				<?php endif; ?>
+				<?php if ( ! empty($test['SQL Query'])): ?>
 				<?=highlight_code($test['SQL Query'])?>
-				<? endif; ?>
+				<?php endif; ?>
 			<em><?=substr($test['File Name'], strlen(FCPATH))?></em> on line <?=$test['Line Number']?>
 		</div>
 	</div>
-	<? endforeach; ?>
+	<?php } ?>
 </div>
-<? endif; ?>
+<?php } ?>
 </body>
 </html>

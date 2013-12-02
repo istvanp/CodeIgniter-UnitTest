@@ -12,9 +12,9 @@ class MY_Unit_test extends CI_Unit_Test
 {
 	var $CI;
 
-	function MY_Unit_test()
+	function __construct()
 	{
-		parent::CI_Unit_Test();
+		parent::__construct();
 		
 		$this->CI =& get_instance();
 	}

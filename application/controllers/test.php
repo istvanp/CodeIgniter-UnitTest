@@ -8,19 +8,20 @@
  * @copyright Copyright (C) 2010 Istvan Pusztai (twitter.com/istvanp)
  **/
  
-class Test extends Controller {
+class Test extends CI_Controller {
 
-	var $timings = array();
-	var $tests = array();
+	private $timings = array();
+	private $tests = array();
 	
 	/**
 	 * Constructor function
 	 *
 	 * @return void
 	 **/
-	function Test()
+	public function __construct()
+
 	{
-		parent::Controller();
+		parent::__construct();
 		
 		// Set time marker for the start of the test suite
 		$this->benchmark->mark('first');
@@ -38,7 +39,7 @@ class Test extends Controller {
 		
 		// Disable database debugging so we can test all units without stopping
 		// at the first SQL error
-		$this->db->db_debug = FALSE;
+		// $this->db->db_debug = FALSE;
 		
 		// Create list of tests
 		$this->_map_tests();
@@ -130,7 +131,7 @@ class Test extends Controller {
 	 * @author Istvan Pusztai
 	 * @return void
 	 **/
-	function _remap()
+	public function _remap()
 	{	
 		$view_data = array();
 		$action = $this->uri->rsegment(2);
@@ -220,7 +221,7 @@ class Test extends Controller {
 	 * @author Istvan Pusztai
 	 * @return void
 	 **/
-	function _map_tests()
+	public function _map_tests()
 	{
 		$methods = get_class_methods($this);
 		natsort($methods);
