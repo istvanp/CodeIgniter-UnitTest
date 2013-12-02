@@ -3,7 +3,7 @@
 <head>
 <?php $this->load->helper('url');?>
 <title>Unit Testing &rsaquo; <?=ucfirst($type)?></title>
-<link rel="stylesheet" type="text/css" href="/css/unit-tests/unit_test.css">
+<link rel="stylesheet" type="text/css" href="<?=site_url("assets/css/unit-tests/unit_test.css")?>">
 </head>
 <body>
 <div id="header">
